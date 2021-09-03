@@ -1,0 +1,327 @@
+[eijkhout@isp02 ~]$ mkdir programming
+[eijkhout@isp02 ~]$ cd programming/
+[eijkhout@isp02 programming]$ g++
+g++: fatal error: no input files
+compilation terminated.
+[eijkhout@isp02 programming]$ icpc
+icpc: command line error: no files specified; for help type "icpc -help"
+[eijkhout@isp02 programming]$ emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ # resume stopped programs with ` fg '
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ cat hello.cxx
+#include <iostream>
+using std::cout;
+using std::endl;
+
+int main() {
+  cout << "hello world" << endl;
+  return 0;
+}
+
+# emacs
+# C-x C-s : save
+# suspend: C-z
+
+[eijkhout@isp02 programming]$ icpc hello.cxx
+hello.cxx(10): error #11: unrecognized preprocessing directive
+  # emacs
+    ^
+
+hello.cxx(11): error #11: unrecognized preprocessing directive
+  # C-x C-s : save
+    ^
+
+hello.cxx(12): error #11: unrecognized preprocessing directive
+  # suspend: C-z
+    ^
+
+compilation aborted for hello.cxx (code 2)
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ !ic
+icpc hello.cxx
+[eijkhout@isp02 programming]$ g++ hello.cxx
+[eijkhout@isp02 programming]$ ls
+a.out  hello.cxx  hello.cxx~
+[eijkhout@isp02 programming]$ # the output of the compiler is a file ` a.out '
+[eijkhout@isp02 programming]$ # unless you specify oterhwise
+[eijkhout@isp02 programming]$ # let's specify otherwise....
+[eijkhout@isp02 programming]$ icpc -o hello hello.cxx
+[eijkhout@isp02 programming]$ ls
+a.out  hello  hello.cxx  hello.cxx~
+[eijkhout@isp02 programming]$ # and now indeed we have a ` hello ' program
+[eijkhout@isp02 programming]$ hello
+-bash: hello: command not found
+[eijkhout@isp02 programming]$ ./hello
+hello world
+[eijkhout@isp02 programming]$ cp hello.cxx goodbye.cpp
+[eijkhout@isp02 programming]$ icpc goodbye.cpp
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ icpc -o hello hello.cxx && ./hello
+hello world
+[eijkhout@isp02 programming]$ # the icpc part compiles,
+[eijkhout@isp02 programming]$ # "&&" indicates that a second command is coming
+[eijkhout@isp02 programming]$ # and "./hello" executes
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ !i
+icpc -o hello hello.cxx && ./hello
+hello
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ # program:
+[eijkhout@isp02 programming]$ cat hello.cxx
+#include <iostream>
+using std::cout;
+using std::endl;
+#include <string>
+using std::string;
+
+void say_function( string txt ) {
+  cout << txt << endl;
+}
+
+int main() {
+  say_function("simon says");
+  return 0;
+}
+
+// these are comments: no need to copy them.
+// emacs
+// C-x C-s : save
+// suspend: C-z
+
+// C-k "kill line" : delete till end of line
+// C-y "yank back" : put back whatever you killed
+[eijkhout@isp02 programming]$ !i
+icpc -o hello hello.cxx && ./hello
+simon says
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ cat emacs.txt
+// these are comments: no need to copy them.
+// emacs
+// C-x C-s : save
+// suspend: C-z
+// exit: C-x C-c
+
+// C-x 2 : split screen by horizontal line
+// C-x 3 : split by vertical line
+// C-x o : "small o" "other panel/buffer
+
+// C-x C-f : find file
+
+// C-k "kill line" : delete till end of line
+// C-y "yank back" : put back whatever you killed
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ icpc -o hello hello.cxx && ./hello
+simon says
+[eijkhout@isp02 programming]$ icpc -o repeat repeat.cxx && ./repeat
+foo
+foo
+[eijkhout@isp02 programming]$ cat repeat.cxx
+#include <iostream>
+using std::cout;
+using std::endl;
+#include <string>
+using std::string;
+
+#include "say.cxx"
+
+int main() {
+  string txt="foo";
+  say_function(txt);  say_function(txt);
+  return 0;
+}
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ ls
+a.out      emacs.txt~   hello      hello.cxx~  repeat.cxx   say.cxx
+emacs.txt  goodbye.cpp  hello.cxx  repeat      repeat.cxx~
+[eijkhout@isp02 programming]$ emacs goodbye.cpp
+[eijkhout@isp02 programming]$ emacs combine.cxx
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ # next topic: separate compilation
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ # what happens when we compile this
+[eijkhout@isp02 programming]$ cat hello.cxx
+#include <iostream>
+using std::cout;
+using std::endl;
+#include <string>
+using std::string;
+
+#include "say.h"
+
+int main() {
+  say_function("simon says");
+  return 0;
+}
+
+[eijkhout@isp02 programming]$ # predict: what happens if I compile only that
+[eijkhout@isp02 programming]$ icpc -o hello hello.cxx
+/tmp/icpchrS0om.o: In function `main':
+hello.cxx:(.text+0x74): undefined reference to `say_function(std::string)'
+[eijkhout@isp02 programming]$ # solution number one:
+[eijkhout@isp02 programming]$ icpc -o hello hello.cxx say.cxx
+say.cxx(1): error: identifier "string" is undefined
+  void say_function( string txt ) {
+                     ^
+
+say.cxx(2): error: identifier "cout" is undefined
+    cout << txt << endl;
+    ^
+
+say.cxx(2): error: identifier "endl" is undefined
+    cout << txt << endl;
+                   ^
+
+compilation aborted for say.cxx (code 2)
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ icpc -o hello hello.cxx say.cxx
+say.cxx(8): error: identifier "endl" is undefined
+    cout << txt << endl;
+                   ^
+
+compilation aborted for say.cxx (code 2)
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ # here are the bits: main progra
+[eijkhout@isp02 programming]$ cat hello.cxx
+#include <iostream>
+using std::cout;
+using std::endl;
+#include <string>
+using std::string;
+
+#include "say.h"
+
+int main() {
+  say_function("simon says");
+  return 0;
+}
+
+[eijkhout@isp02 programming]$ # aux function:
+[eijkhout@isp02 programming]$ cat say.cxx
+#include <iostream>
+using std::cout;
+using std::endl;
+#include <string>
+using std::string;
+
+void say_function( string txt ) {
+  cout << txt << endl;
+}
+
+[eijkhout@isp02 programming]$ icpc -o hello hello.cxx say.cxx
+[eijkhout@isp02 programming]$ emacs compile_everything
+
+[2]+  Stopped                 emacs compile_everything
+[eijkhout@isp02 programming]$ cat compile_everything
+# only compile, do not "link", meaning build the executable
+icpc -c hello.cxx
+# another compile-only
+icpc -c say.cxx
+
+[eijkhout@isp02 programming]$ rm hello
+[eijkhout@isp02 programming]$ icpc -c hello.cxx
+[eijkhout@isp02 programming]$ # another compile-only
+[eijkhout@isp02 programming]$ icpc -c say.cxx
+[eijkhout@isp02 programming]$ # now what do I have?
+[eijkhout@isp02 programming]$ ls
+a.out         compile_everything  goodbye.cpp  hello.o     repeat.cxx~  say.h
+combine.cxx   emacs.txt           hello.cxx    repeat      say.cxx      say.o
+combine.cxx~  emacs.txt~          hello.cxx~   repeat.cxx  say.cxx~
+[eijkhout@isp02 programming]$ fg
+emacs compile_everything
+
+[2]+  Stopped                 emacs compile_everything
+[eijkhout@isp02 programming]$ fg
+emacs compile_everything
+
+[2]+  Stopped                 emacs compile_everything
+[eijkhout@isp02 programming]$ cat compile_everything
+# only compile, do not "link", meaning build the executable
+icpc -c hello.cxx
+# as a result of this compile line you get a dot-oh file.
+
+# another compile-only
+icpc -c say.cxx
+
+# now link them together:
+icpc -o hello hello.o say.o
+[eijkhout@isp02 programming]$ icpc -c hello.cxx
+[eijkhout@isp02 programming]$ # as a result of this compile line you get a dot-oh file.
+[eijkhout@isp02 programming]$
+[eijkhout@isp02 programming]$ # another compile-only
+[eijkhout@isp02 programming]$ icpc -c say.cxx
+[eijkhout@isp02 programming]$
+[eijkhout@isp02 programming]$ # now link them together:
+[eijkhout@isp02 programming]$ icpc -o hello hello.o say.o
+[eijkhout@isp02 programming]$ # ^^^^^^^^^^^^^^^^^
+[eijkhout@isp02 programming]$ # i was copying and pasting the lines
+[eijkhout@isp02 programming]$ # that's silly
+[eijkhout@isp02 programming]$
+[eijkhout@isp02 programming]$ # but at least now we have "hello" program:
+[eijkhout@isp02 programming]$ ls
+a.out               compile_everything~  hello       repeat       say.cxx~
+combine.cxx         emacs.txt            hello.cxx   repeat.cxx   say.h
+combine.cxx~        emacs.txt~           hello.cxx~  repeat.cxx~  say.o
+compile_everything  goodbye.cpp          hello.o     say.cxx
+[eijkhout@isp02 programming]$ ./hello
+simon says
+[eijkhout@isp02 programming]$ fg
+emacs compile_everything
+
+[2]+  Stopped                 emacs compile_everything
+[eijkhout@isp02 programming]$ fg
+emacs compile_everything
+
+[2]+  Stopped                 emacs compile_everything
+[eijkhout@isp02 programming]$ less say.o
+"say.o" may be a binary file.  See it anyway?
+[eijkhout@isp02 programming]$ fg
+emacs compile_everything
+[eijkhout@isp02 programming]$ fg
+emacs hello.cxx
+
+[1]+  Stopped                 emacs hello.cxx
+[eijkhout@isp02 programming]$ !em:P
+-bash: P: unrecognized history modifier
+[eijkhout@isp02 programming]$ ls
+a.out               compile_everything~  hello       repeat       say.cxx~
+combine.cxx         emacs.txt            hello.cxx   repeat.cxx   say.h
+combine.cxx~        emacs.txt~           hello.cxx~  repeat.cxx~  say.o
+compile_everything  goodbye.cpp          hello.o     say.cxx
