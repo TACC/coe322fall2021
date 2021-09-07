@@ -1,0 +1,39 @@
+void swap(int &a, int &b){
+  int c = a;
+  a = b;
+  b = c;
+}
+
+  swap(i,j);
+
+================================================================ not what was asked
+
+void swap(int i, int j) {
+    int swapper;
+    cout << i << "," << j << endl;
+    swapper = i;
+    i = j;
+    j = swapper;
+    cout << i << "," << j << endl;
+}
+
+================================================================ no C-style pointers please
+
+void swap(int *varx, int *vary) {
+
+    int temp = *varx;
+    *varx = *vary;
+    *vary = temp;
+
+}
+
+================================================================ what does return mean?
+
+int swap(int &a, int &b) {
+        int x = a;
+        a = b;
+        b = x;
+        return a;
+        return b;
+}
+
