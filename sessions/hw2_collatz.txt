@@ -1,0 +1,84 @@
+================================================================ Good.
+
+    for (int n = 1; n < 1001; n++) {
+        int un = n;
+        int sequence_len = 1;
+        // Collatz conjecture
+        while (un > 1) {
+            // Even
+            if (un % 2 == 0) {
+                un /= 2;
+            }
+            else {
+                un = 3 * un + 1;
+            }
+            sequence_len++;
+        }
+        if (sequence_len > max_len) {
+            cout << n << ' ';
+            max_len = sequence_len;
+        }
+    }
+
+
+
+================================================================ local variables please
+
+        int n;
+        int u=1;
+        int current;
+        int highest=0;
+
+        for (int n=1; n<=1000; n++) {
+                u = n;
+                current = 1;
+
+================================================================ looks good, but....
+
+  int n;
+  int final_number = 0;
+  int max = 0;
+  for (int i = 1; i <= 1000; i++){
+    int z = 0;
+    do{
+      if ((i % 2) == 0) {
+        n = (i / 2);
+      }
+      else{
+        n = (3 * i + 1);
+      }
+      z += 1;
+    }while(n != 1);
+    if (z > max){
+      max = z;
+      final_number = i;
+    }
+  }
+
+Suggestion #1: naming!
+"i" => "start_value"
+"n" = > "current"
+"z" => "length"
+
+Are you convinced that this code is correct?
+
+Suggestion #2: scope
+
+================================================================ Clever trick
+
+    if (n&1)
+      n=3*n+1;
+
+This is correct (I think) but I had to think about it.
+Write your code foremost to be *obviously* correct.
+Avoid clever tricks.
+Don't worry (much) about efficiency.
+
+================================================================ No.
+
+    ctz* ctzv = new ctz(start);
+    ctzv = loop(ctzv);
+
+contact me.
+
+================================================================

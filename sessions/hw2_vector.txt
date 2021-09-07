@@ -1,0 +1,63 @@
+================================================================ Good.
+
+  vector<int> vec = {1,2,3,4,5,6};
+  int evensum = 0;
+
+  for (auto i : vec){
+
+    if ( i % 2 == 0){
+      evensum +=i;
+    }
+
+
+  }//end of for loop to sum even elements
+
+  int indsum = 0;
+
+  for (int i=0; i<vec.size(); i++) {
+
+    if (i % 2 == 0){
+      indsum += vec.at(i);
+    }
+
+  } //end of for loop to sum even indices
+
+1. create a vector with initializer list
+2. use range-based for if you only need the value, not the index
+3. use indexed loop if you actually need the index
+4. use of "at" is safer than "[i]" but potentially slower
+
+================================================================ also correct
+
+    // even index sum
+    sum = 0;
+    for(int i = 0; i<sze;i+=2)
+    {
+        sum+=vecyt[i];
+    }
+
+Different interpretation of the exercise: fine.
+
+================================================================ old-style arrays
+  int arr[]={1,2,3,4,5,6};
+  int n=sizeof(arr)/sizeof(arr[0]);
+  even_sum(arr,n)
+
+1. This is C-style coding: not recommended for C++
+2. std::vector (and std::array) are more convenient and just as fast
+3. std::vector knows its own size, so you don't have to pass it.
+
+================================================================ inefficient
+
+    vector<int> vect;
+
+    vect.push_back(1);
+    vect.push_back(2);
+    vect.push_back(3);
+    vect.push_back(4);
+    vect.push_back(5);
+
+1. This does the same as above
+2. extending the vector size is inefficient
+3. only use "push_back" if you really need dynammic behavior
+
