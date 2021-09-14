@@ -10,7 +10,7 @@
 ####
 ################################################################
 
-PROGRAMS = ijloop stream newton
+PROGRAMS = ijloop stream newton pointclass
 
 LANGUAGE = CXX
 include ../code/Make.inc
