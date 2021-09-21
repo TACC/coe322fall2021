@@ -1,0 +1,46 @@
+================================ step by step
+
+          left = left - 1;
+          right = right - 1;
+
+My solution:
+
+void find_outer( const vector<double>& coefficients,double &left,double &right) {
+  if (is_odd(coefficients)) {
+    left = -1; right = +1;
+    while ( evaluate_at(coefficients,left)*evaluate_at(coefficients,right) > 0 ) {
+      left *=2; right *= 2;
+
+
+================================ evaluation
+
+double evaluate_at(vector<double> coefficients, double x) {
+  double y = 0;
+  for (int i=0;i<coefficients.size(); i++) {
+    y += coefficients[i]*pow(x,coefficients.size()-1-i);
+  }
+  return y;
+}
+
+//this should constitute horners rule, but after surveying the textbook, im not sure
+double eval_at(const vector<double>& coefficients, double x)
+{
+  double r=coefficients[0];
+  for (int c=1;c<coefficients.size();c++)
+    {
+      r=x*r+coefficients[c];//calculating the value of the polynomial at an x
+    }
+  return r;
+}
+
+double evaluate_at(const vector<double>& coefficients,const double x)
+{
+    // I don't like Horner's rule since it is serial and not parallizable, but that is not relevant here.
+    double b = 0;
+    for(auto c : coefficients)
+    {
+        b = b*x + c;
+    }
+    return b;
+}
+
