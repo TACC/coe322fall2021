@@ -28,7 +28,7 @@ public:
 
 int main() {
   Point p1(1.0,1.0);
-  float d = p1.distance();
+  float d = p1.distance_to_origin();
   cout << "Distance to origin: "
        << d << endl;
 
