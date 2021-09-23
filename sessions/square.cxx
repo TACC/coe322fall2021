@@ -32,10 +32,10 @@ public:
 
 class Square : public Rectangle {
 private:
-  /* need any data members? */
 public: 
-  Square( ???? ) : Rectangle( ???? ) { ????? };
-  /* other methods? */
+  Square( Point bottomleft, float w ) : Rectangle( bottomleft,w,w ) { 
+    /* this is silly: if (w!=h) scream_loudly(); */
+  };
 };
 
 int main() {
