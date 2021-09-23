@@ -23,9 +23,11 @@ public:
   // optionally: comma and more of those
 
   Rectangle( Point bbl,Point ttr )
-    : bottomleft(bbl),width(?????), {};
+    : bottomleft(bbl),
+      width(ttr.xcoord() - bbl.xcoord()),
+      height(ttr.ycoord() - bbl.ycoord()) {};
   float area() { return width*height; };
-  float right_edge_x() { return bottomleft.xcoord() + width; }; // not correct yet!
+  float right_edge_x() { return bottomleft.xcoord() + width; };
 };
 
 int main() {
@@ -33,7 +35,10 @@ int main() {
   Point oneone(1,1),twothree(2,3);
   Rectangle portrait(oneone,2.5,4.);
   cout << "portrait has area " << portrait.area() << endl;
+  Rectangle other(oneone,twothree);
+  cout << "other has area " << other.area() << endl;
 
+  return 0;
 }
 
 // emacs has `point' and `mark'. point = where you are (left side of the cursor)
