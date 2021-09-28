@@ -1,0 +1,141 @@
+================================ Good
+
+class primegenerator{
+private:
+    int last_number_tested, number_of_primes;
+
+public:
+    primegenerator(){last_number_tested=1; number_of_primes=0;};
+    int nextprime(){
+        int current = last_number_tested+1;
+        while (not isprime(current)) {
+            current++;
+        }
+        last_number_tested = current;
+        number_of_primes++;
+        return current;
+    };
+    int number_of_primes_found(){
+        return number_of_primes;
+    };
+    int current(){
+        return last_number_tested;
+    };
+    bool isprime(int test){
+        for(int i=2;i<test;i++){
+            if (test%i==0) {
+                return false;
+            }
+        }
+        return true;
+    };
+};
+
+================================ Marginally better
+
+//Initialize the function
+bool is_prime(int number);
+
+//Primegenerator class
+class Primegenerator{
+
+private: //data members stored
+  int how_many_primes_found = 0;
+  int last_number_tested;
+
+=> `is_prime' does not need to be in the class
+
+================================ Ok'ish
+
+class primegenerator
+{
+public:
+  int nfound=0;
+  int last_number_tested=0;
+
+  bool isprime(int n) {
+    if (n<=1) return false;
+    if (n<=3) return true;
+    if (n%2==0 || n%3==0) return false;
+    for (int i=5; i*i<=n; i=i+6) {
+      if (n%i==0 || n%(i+2)==0)
+        return false;
+    }
+    return true;
+  }
+
+1. Prefer to declare data members private
+2. Optimization is ok, but be really sure.
+
+================================ My brain hurts
+
+  int nextprime() {
+    while  (isprime(last_number_tested) == false) {
+      last_number_tested++;
+    }
+    num++;
+    last_number_tested++;
+    return last_number_tested-1;
+  }
+
+=> Too much plussing and minussing for me.
+(How about that "== false"?)
+
+================================ Short and elegant
+
+  int nextprime(){
+    while(isprime(last_number_tested)==false){
+      last_number_tested++;
+    }
+    found++;
+    return last_number_tested++;
+  }
+  
+================================ Other solution
+
+  int nextprime(){
+    int n = last_number_tested + 1;
+    while (! isprime(n)){ //loop until it finds a prime number
+      n++;
+    } // if a prime number is found, kick out of loop
+    last_number_tested = n;
+    how_many_primes_found ++; //increase count of prime numbers found
+    return n;
+  }
+
+=> Give a better name than "n"?
+
+================================ Clever
+
+Test only against previously found primes:
+
+            int n = last_number_tested;
+            bool nIsPrime = false;
+
+            while(!nIsPrime){
+                // all primes after 2 are odd, so incrementing by 2
+                // when 3 is the last prime is the most efficient
+                n += 2;
+                nIsPrime = true;
+                // iterates through all previously found primes
+                for(int p: primes){
+                    if(n % p == 0){
+                        // if n is divisible by a prime, it is not prime
+                        nIsPrime = false;
+                        break;
+                    }
+                    if(p*p > n){
+                        // all prime factors of n are less than
+                        // the sqaure root of n
+                        break;
+                    }
+                }
+            }
+
+            // appends newly found prime and adjusts private memebers accordingly
+            primes.push_back(n);
+
+
+=> Otherwise: no std::vector please.
+
+================================
