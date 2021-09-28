@@ -33,6 +33,10 @@ double eval_at(const vector<double>& coefficients, double x)
   return r;
 }
 
+  c0 x^5 + c1 x^4 + .... ===
+  c0 ) x + c1 ) x + c2 ) x   .. with enough left parentheses
+
+
 double evaluate_at(const vector<double>& coefficients,const double x)
 {
     // I don't like Horner's rule since it is serial and not parallizable, but that is not relevant here.
@@ -44,3 +48,8 @@ double evaluate_at(const vector<double>& coefficients,const double x)
     return b;
 }
 
+   c0 x + c1   c2 x + c3   c4 x + c5   c6 x +c7
+   times x^2               times x^2
+   ........add..........   ........add.........
+   times x^4
+   ....................add.....................
