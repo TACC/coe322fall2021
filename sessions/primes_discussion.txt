@@ -81,16 +81,38 @@ public:
 => Too much plussing and minussing for me.
 (How about that "== false"?)
 
+VLE suggestion:
+
+// P == last_number_tested is not prime
+while () {
+... }
+// last_number_tested is prime
+int prime_found = last_number_tested;
+// now make sure that last_number_tested becomes non-prime
+last_number_tested++;
+// and return that prime we found
+return prime_found;
+
+VLE suggestion #2
+
+while () { ...}
+// last_number_tested is prime
+return last_number_tested++;
+
 ================================ Short and elegant
 
   int nextprime(){
     while(isprime(last_number_tested)==false){
+// more elegant?    while( not isprime(last_number_tested)){
       last_number_tested++;
     }
     found++;
     return last_number_tested++;
   }
   
+// ESC f : jump over word
+// ESC Ctrl-f : jump over matched parens/braces
+
 ================================ Other solution
 
   int nextprime(){
