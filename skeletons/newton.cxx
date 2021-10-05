@@ -12,6 +12,7 @@
 using std::cin;
 using std::cout;
 using std::endl;
+#include <cmath>
 
 #include <functional>
 using std::function;
@@ -25,7 +26,7 @@ int main() {
   while ( true ) {
     auto fx = f(x);
     cout << "f( " << x << " ) = " << fx << "\n";
-    if (abs(fx)<1.e-10 ) break;
+    if (std::abs(fx)<1.e-10 ) break;
     x = x - fx/g(x);
   }
   
