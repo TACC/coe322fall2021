@@ -1,0 +1,126 @@
+================================ No-nonsense solution
+
+class Pascal{
+private:
+    int arrays;
+    vector<vector<double>> pasc;
+public:
+    Pascal(int n){arrays = n;
+      pasc = vector<vector<double>> (arrays,vector<double>(arrays)); //matrix vector
+      for(int i = 0;i<arrays;i++){  //create pascals triangle with entered n
+            for(int j=0;j<=i;j++){
+                if(i==j||j==0){
+                    pasc.at(i).at(j)=1;
+                }
+                else{
+                    pasc.at(i).at(j)=pasc.at(i-1).at(j-1)+pasc.at(i-1).at(j);
+                }
+            }
+         }
+    }
+
+1. vector-of-vector : not quite optimal, but it works
+2. recursive construction of coefficients: as efficient as can be
+
+Except: really no reason to use double.
+
+================================ optimized
+
+class pascal{
+private:
+    vector<int> coefficients;
+    int n;
+    int index(int i, int j){
+        if(i < 1 || j < 1 || i > n || j>i){
+            cout << i << ", " << j << endl;
+            throw;
+        }
+        return (i*(i-1) / 2) + j - 1;
+    }
+public:
+    int get(int i, int j){
+        return coefficients.at(index(i, j));
+    }
+
+Single vector and indexing function: good.
+
+=============================== dynamic
+
+  pascal(int n)
+  {
+    size = 0;
+    elements.push_back({1});
+    for (int i = 1; i <= n; i++)
+      {
+        vector<int> adding;
+        for (int j = 0; j <= i; j++)
+          {
+            adding.push_back(fact(i) / (fact(j) * fact(i - j)));
+          }
+        elements.push_back(adding);
+      }
+  };
+
+1. This is nifty: it gives you a triangular array
+2. but dynamic solutions are generally not advisable for static problems
+   I would have preferred a solution without this much "push_back".
+
+
+================================ I don't like it.
+
+    long fact(long n){
+    int i, fact = 1;
+    for(i = n; i>1; i--)
+         fact *= i;
+    return fact;
+    }
+
+use of factorial is not efficient / accident-prone / not needed
+
+
+================================ I don't like it.
+
+  double get(int row, int column){
+    double coeffcient_at_position_row_column;
+    double numerator, denominator;
+    numerator = factorial(row);
+    denominator = factorial(row - column) * factorial(column);
+    coeffcient_at_position_row_column = numerator/denominator;
+    return round(coeffcient_at_position_row_column);
+  };
+
+no floating point numbers for int
+
+================================ too much stackoverflow
+
+class pascal
+{
+private:
+  int n;
+  int **arr;
+public:
+  pascal(int rows)
+  {
+    n = rows;
+    *arr =new int[n];
+
+
+1. I didn't teach you this
+2. In fact, I told you not to do this.
+3. This code has a memory leak. BAD
+
+Do Not Use "new", square brackets, or this asterisk stuff.
+
+================================ more stackoverflow
+
+class pascal {
+private:
+        long long** arr;
+
+public:
+        pascal(int n)
+        {
+                arr = (long long**)malloc(n * sizeof(long long*));
+
+
+Using "malloc" is even less good than using "new"
