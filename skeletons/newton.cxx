@@ -18,7 +18,7 @@ using std::endl;
 using std::function;
 
 double f(double x) { return x*x-2; };
-double g(double x) { return 2*x; };
+double fprime(double x) { return 2*x; };
 
 int main() {
 
@@ -27,7 +27,7 @@ int main() {
     auto fx = f(x);
     cout << "f( " << x << " ) = " << fx << "\n";
     if (std::abs(fx)<1.e-10 ) break;
-    x = x - fx/g(x);
+    x = x - fx/fprime(x);
   }
   
   return 0;
