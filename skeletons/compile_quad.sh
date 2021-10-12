@@ -1,4 +1,5 @@
-icpc -o zero zeroone.cxx \
+icpc -o quad quadtest.cxx \
+    -std=c++17 \
     -I${TACC_CATCH2_INC} -L${TACC_CATCH2_LIB} \
     -lCatch2Main -lCatch2
 
