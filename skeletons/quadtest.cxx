@@ -78,7 +78,7 @@ TEST_CASE( "D = 0" ) {
   INFO( a << "," << b << "," << c << " d=" << d );
   REQUIRE( z );
   auto r = simple_root(coefficients);
-  REQUIRE( std::abs( evaluate(coefficients,r) )<1.e-12 );
+  REQUIRE( evaluate(coefficients,r)==Catch::Approx(0.).margin(1.e-14) );
   //  REQUIRE( evaluate(coefficients,r) ==Catch::Approx(0.) );
 }
 
@@ -105,8 +105,8 @@ TEST_CASE( "double root" ) {
   auto
     e1 = evaluate(coefficients,r1),
     e2 = evaluate(coefficients,r2);
-  REQUIRE( evaluate(coefficients,r1)==Catch::Approx(0.) );
-  REQUIRE( evaluate(coefficients,r2)==Catch::Approx(0.) );
+  REQUIRE( evaluate(coefficients,r1)==Catch::Approx(0.).margin(1.e-14) );
+  REQUIRE( evaluate(coefficients,r2)==Catch::Approx(0.).margin(1.e-14) );
 }
 
 TEST_CASE( "full test" ) {
