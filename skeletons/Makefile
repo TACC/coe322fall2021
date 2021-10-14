@@ -29,4 +29,13 @@ RUNS += run_stream
 run_stream : stream
 	@./stream
 
+info ::
+	@echo "make sync : with student repo"
+include ../makefiles/Make.repo
+.PHONY:  sync
+sync :
+	src=`pwd` \
+	 && cd "${STUDENTREPO}/skeletons" \
+	 && rsync $$src/*.cxx .
+
 include ../makefiles/Make.clean
