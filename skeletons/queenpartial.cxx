@@ -66,7 +66,7 @@ TEST_CASE( "bounds test" ) {
 }
 
 TEST_CASE( "feasibility test" ) {
-  constexpr int n=10;
+  const int n=10;
   board empty(n);
   REQUIRE( empty.feasible() );
 
@@ -77,7 +77,7 @@ TEST_CASE( "feasibility test" ) {
 }
 
 TEST_CASE( "collision test" ) {
-  constexpr int n=10;
+  const int n=10;
   board empty(n);
   board one = empty;
   one.place_next_queen_at_column(0);
@@ -95,7 +95,7 @@ TEST_CASE( "final test" ) {
 }
 
 TEST_CASE( "generate one and two" ) {
-  constexpr int n=10;
+  const int n=10;
   board empty(n);
 
   // loop over all possibilities first queen

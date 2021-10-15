@@ -32,13 +32,13 @@ using std::optional;
 #include "catch2/catch_all.hpp"
 
 TEST_CASE( "empty board" ) {
-  constexpr int n=10;
+  const int n=10;
   board empty(n);
   REQUIRE( empty.next_row_to_be_filled()==0 );
 }
 
 TEST_CASE( "bounds test" ) {
-  constexpr int n=10;
+  const int n=10;
   board empty(n);
   REQUIRE_THROWS( empty.place_next_queen_at_column(-1) );
   REQUIRE_THROWS( empty.place_next_queen_at_column(n) );
@@ -47,7 +47,7 @@ TEST_CASE( "bounds test" ) {
 }
 
 TEST_CASE( "feasibility test" ) {
-  constexpr int n=10;
+  const int n=10;
   board empty(n);
   REQUIRE( empty.feasible() );
 
@@ -58,7 +58,7 @@ TEST_CASE( "feasibility test" ) {
 }
 
 TEST_CASE( "collision test" ) {
-  constexpr int n=10;
+  const int n=10;
   board empty(n);
   board one = empty;
   one.place_next_queen_at_column(0);
@@ -74,7 +74,7 @@ TEST_CASE( "final test" ) {
 }
 
 TEST_CASE( "generate one and two" ) {
-  constexpr int n=10;
+  const int n=10;
   board empty(n);
 
   // loop over all possibilities first queen
