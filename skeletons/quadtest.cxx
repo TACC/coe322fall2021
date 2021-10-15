@@ -38,6 +38,8 @@ using std::visit;
 
 using quadratic = tuple<double,double,double>;
 
+#include "quadlib.h"
+
 TEST_CASE( "discriminant" ) {
   REQUIRE( discriminant( make_tuple(0., 2.5, 0.) ) ==Catch::Approx(6.25) );
   REQUIRE( discriminant( make_tuple(1., 0., 1.5 ) ) ==Catch::Approx(-6.) );
@@ -48,7 +50,6 @@ TEST_CASE( "discriminant" ) {
 // try also this:
 //  REQUIRE( discriminant( make_tuple(.1, .1, .1*.5 ) ) == -.01 );
 
-#if 0
 
 TEST_CASE( "D = 0" ) {
   double a,b,c,d; bool z;
@@ -76,8 +77,8 @@ TEST_CASE( "D = 0" ) {
   z = discriminant_zero( coefficients );
   INFO( a << "," << b << "," << c << " d=" << d );
   REQUIRE( z );
-  // auto r = simple_root(coefficients);
-  // REQUIRE( evaluate(coefficients,r)==Catch::Approx(0.).margin(1.e-14) );
+  auto r = simple_root(coefficients);
+  REQUIRE( evaluate(coefficients,r)==Catch::Approx(0.).margin(1.e-14) );
   //  REQUIRE( evaluate(coefficients,r) ==Catch::Approx(0.) );
 }
 
@@ -126,5 +127,3 @@ TEST_CASE( "full test" ) {
   auto result = compute_roots(coefficients);
   REQUIRE( result.index()==index );
 }
-
-#endif
