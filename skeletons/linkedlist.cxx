@@ -19,6 +19,12 @@ public:
     else 
       return 1 + tail_ptr->list_length();
   };
+  int append( shared_ptr<Node> newtail ) {
+    if (tail_ptr==nullptr)
+      set_tail(newtail);
+    else 
+      tail_ptr->append(newtail);
+  };
   int value() { return datavalue; };
   bool has_next() {
     return tail_ptr!=nullptr; };
@@ -27,8 +33,10 @@ public:
 int main() {
   auto
     first = make_shared<Node>(23),
-    second = make_shared<Node>(45); 
-  first->set_tail(second);
+    second = make_shared<Node>(45),
+    third = make_shared<Node(67);
+  first->append(second);
+  first->append(third);
   cout << "List length: "
        << first->list_length() << endl; 
   // first->print();
