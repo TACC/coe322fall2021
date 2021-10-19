@@ -28,6 +28,13 @@ private:
 public:
   board( int n ) 
     : columns( vector<int>(n,-1) ) {};
+  board( vector<int> cols ) 
+    : columns(cols) {};
+  board( int n, vector<int> cols )
+    : board(n) {
+    // copy the elements of cols -> columns
+  }
+
   int next_row_to_be_filled() const {
     int next=0;
     while (columns[next]>=0)
