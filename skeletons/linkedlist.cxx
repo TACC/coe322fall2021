@@ -28,18 +28,30 @@ public:
   int value() { return datavalue; };
   bool has_next() {
     return tail_ptr!=nullptr; };
+  void print(bool i_am_first=true) {
+    if (i_am_first)
+      cout << "<<";
+    cout << datavalue;
+    if (has_next()) {
+      cout << ",";
+      tail_ptr->print(false);
+    } else
+      cout << ">>\n";
+    }
 };
 
 int main() {
   auto
     first = make_shared<Node>(23),
     second = make_shared<Node>(45),
-    third = make_shared<Node(67);
+    third = make_shared<Node>(67);
   first->append(second);
   first->append(third);
   cout << "List length: "
        << first->list_length() << endl; 
-  // first->print();
+  first->print();
+
+  // C-u 4 ESC f
 
   return 0;
 }
