@@ -34,3 +34,15 @@ And that goes doubly for star-star.
 
 Needs one more test.
 
+================ HINT
+
+void insert( shared_ptr<Node> newnode ) {
+     // assumption: newnode->value() > this->value()
+     if ( tailptr==nullptr ) 
+     	// set tail to newnode
+     // two cases:
+     // 1. newnode goes between this & tailptr
+        this is the hard one
+     // 2. newnode goes after tailptr
+        tailptr->insert(newnode);
+}
