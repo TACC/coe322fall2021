@@ -1,0 +1,36 @@
+================ error
+
+  void insert(shared_ptr<Node> value){
+    if(tail_ptr < value){
+      auto temp = tail_ptr;
+      set_tail(value);
+      append(temp);
+    }
+  };
+
+You can not compare pointers:
+a pointer is sort-of like an object:
+you need a method to extract the relevant data member
+
+================ inadvisable
+
+    Node* temp = head;
+
+Don't use stars until you really understand this stuff.
+Avoid tutorials & stackoverflow answers that use them
+
+void sortedInsert(Node** head_r,
+
+And that goes doubly for star-star.
+
+================ conceptual problem
+
+  void insert(shared_ptr<Node> newinsert){
+    if(tail_ptr!=nullptr && datavalue < newinsert->value())
+      newinsert->tail_ptr=tail_ptr;
+    else
+      tail_ptr->insert(newinsert);
+  };
+
+Needs one more test.
+
