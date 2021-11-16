@@ -11,10 +11,9 @@
 Module Physics
 
   Type,public :: VectorField
-     real(8),dimension(5) :: value
+     real(8),dimension(:),allocatable :: value
    contains
-     procedure,public :: set,print
-     procedure,public :: add
+     procedure,public :: set,setlinear,print,add,alloc
   End type VectorField
 
   interface operator(+)
@@ -31,11 +30,29 @@ contains
     v%value = x
   end subroutine set
 
+  subroutine alloc(v,n)
+    implicit none
+    class(VectorField) :: v
+    integer,intent(in) :: n
+
+    allocate(v%value(n))
+  end subroutine alloc
+
+  subroutine setlinear(v)
+    implicit none
+    class(VectorField) :: v
+    integer :: i
+
+    do i=1,size(v%value)
+       v%value(i) = i
+    end do
+  end subroutine setlinear
+
   subroutine print(v)
     implicit none
     class(VectorField) :: v
 
-    print '(5f7.4)', v%value
+    print '(6f7.4)', v%value
   end subroutine print
 
   function add(in1,in2) result(out)
@@ -56,7 +73,10 @@ Program Simulation
 
   Type(VectorField) :: u,v,z
 
-  call u%setlinear(2.d0)
+  call u%alloc(6)
+  call v%alloc(6)
+
+  call u%setlinear()
   call v%set(1.d0)
   
   !  z = u%add(v)

@@ -45,6 +45,11 @@ int main() {
     first = make_shared<Node>(23),
     second = make_shared<Node>(45),
     third = make_shared<Node>(67);
+
+  // using a Node object directly:
+  Node n(5); n.print(); n.list_length();
+
+  // pointer stuff
   first->append(second);
   first->append(third);
   cout << "List length: "
