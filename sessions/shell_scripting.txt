@@ -1,0 +1,298 @@
+####
+#### I started with a collatz code that interactively needed  an upper bound as input
+####
+[eijkhout@isp02 sessions]$ ./collatz
+10
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+Found length 8 at 6
+Found length 16 at 7
+Found length 19 at 9
+[eijkhout@isp02 sessions]$ ./collatz
+20
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+Found length 8 at 6
+Found length 16 at 7
+Found length 19 at 9
+Found length 20 at 18
+[eijkhout@isp02 sessions]$ fg
+####
+#### make an input file:
+[eijkhout@isp02 sessions]$ cat collatz.in
+20
+
+#### use that:
+[eijkhout@isp02 sessions]$ ./collatz < collatz.in
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+Found length 8 at 6
+Found length 16 at 7
+Found length 19 at 9
+Found length 20 at 18
+[eijkhout@isp02 sessions]$ ./collatz < collatz.in > collatz.out
+[eijkhout@isp02 sessions]$ cat collatz.out
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+Found length 8 at 6
+Found length 16 at 7
+Found length 19 at 9
+Found length 20 at 18
+[eijkhout@isp02 sessions]$ # < for input
+[eijkhout@isp02 sessions]$ # > for output
+[eijkhout@isp02 sessions]$ # >> for append
+[eijkhout@isp02 sessions]$ ./collatz < collatz.in >> collatz.out
+[eijkhout@isp02 sessions]$ cat collatz.out
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+Found length 8 at 6
+Found length 16 at 7
+Found length 19 at 9
+Found length 20 at 18
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+Found length 8 at 6
+Found length 16 at 7
+Found length 19 at 9
+Found length 20 at 18
+[eijkhout@isp02 sessions]$ a=5
+[eijkhout@isp02 sessions]$ echo a
+a
+[eijkhout@isp02 sessions]$ echo $a
+5
+[eijkhout@isp02 sessions]$ # if a is a variable, then $a is the value
+[eijkhout@isp02 sessions]$ # note: assignment is picky
+[eijkhout@isp02 sessions]$ a = 5
+-bash: a: command not found
+[eijkhout@isp02 sessions]$ a =5
+-bash: a: command not found
+[eijkhout@isp02 sessions]$ a= 5
+-bash: 5: command not found
+[eijkhout@isp02 sessions]$ a=5
+[eijkhout@isp02 sessions]$ # no spaces around the equals
+[eijkhout@isp02 sessions]$ # let's do something with variables:
+[eijkhout@isp02 sessions]$ for v in 1 2 5 foo bar ; do echo $v ; done
+1
+2
+5
+foo
+bar
+[eijkhout@isp02 sessions]$ # let's see if we can run collatz for a set of inputs
+[eijkhout@isp02 sessions]$ # we want something like: for v in 1 2 5 foo bar ; do ./collatz $v ; done
+[eijkhout@isp02 sessions]$ # next trick:
+[eijkhout@isp02 sessions]$ echo 3 | ./collatz
+Found length 0 at 1
+Found length 1 at 2
+[eijkhout@isp02 sessions]$ for input in 3 4 5 ; do echo $input | ./collatz ; done
+Found length 0 at 1
+Found length 1 at 2
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+[eijkhout@isp02 sessions]$ for input in 3 4 5 ; do echo "testing $input" ; echo $input | ./collatz ; done
+testing 3
+Found length 0 at 1
+Found length 1 at 2
+testing 4
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+testing 5
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+[eijkhout@isp02 sessions]$ # if I edit my program and want to do this test again:
+[eijkhout@isp02 sessions]$ # repeat the last command that started with "for":
+[eijkhout@isp02 sessions]$ !for
+for input in 3 4 5 ; do echo "testing $input" ; echo $input | ./collatz ; done
+testing 3
+Found length 0 at 1
+Found length 1 at 2
+testing 4
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+testing 5
+Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+[eijkhout@isp02 sessions]$ echo $a
+5
+[eijkhout@isp02 sessions]$ if [ $a = 5 ] ; then echo "it was 5" ; else echo "it was $a" ; fi
+it was 5
+[eijkhout@isp02 sessions]$ # that was string testing, for numbers:
+[eijkhout@isp02 sessions]$ if [ $a -eq 5 ] ; then echo "it was 5" ; else echo "it was $a" ; fi
+it was 5
+[eijkhout@isp02 sessions]$ # next topic: "wc"
+[eijkhout@isp02 sessions]$ wc collatz2.cxx
+  45  142 1181 collatz2.cxx
+[eijkhout@isp02 sessions]$ # line, word, character count
+[eijkhout@isp02 sessions]$ wc -l collatz2.cxx
+45 collatz2.cxx
+[eijkhout@isp02 sessions]$ echo "file collatz has wc -l collatz2.cxx lines"
+file collatz has wc -l collatz2.cxx lines
+[eijkhout@isp02 sessions]$ # how do we get that "wc" command evaluated before the "stringing"
+[eijkhout@isp02 sessions]$ echo "file collatz has `wc -l collatz2.cxx` lines"
+file collatz has 45 collatz2.cxx lines
+[eijkhout@isp02 sessions]$ # use of backquotes (traditional): evaluate inner command before outer
+[eijkhout@isp02 sessions]$ echo "file collatz has $( wc -l collatz2.cxx ) lines"
+file collatz has 45 collatz2.cxx lines
+[eijkhout@isp02 sessions]$ # $( command )  : more modern syntax, does the same thing as backticks.
+[eijkhout@isp02 sessions]$
+[eijkhout@isp02 sessions]$ # find previous command and DO NOT EXECUTE, ONLY DISPLAY
+[eijkhout@isp02 sessions]$ !for:p
+for input in 3 4 5 ; do echo "testing $input" ; echo $input | ./collatz ; done
+[eijkhout@isp02 sessions]$ for input in 3 4 5 ; do echo "testing $input gives $( $input | ./collatz ) lines of output" ; done
+-bash: 3: command not found
+testing 3 gives Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+Found length 8 at 6
+Found length 16 at 7
+Found length 19 at 9
+Found length 20 at 18
+Found length 23 at 25
+Found length 111 at 27
+Found length 112 at 54
+Found length 115 at 73
+Found length 118 at 97
+Found length 121 at 129
+Found length 124 at 171
+Found length 127 at 231
+Found length 130 at 313
+Found length 143 at 327
+Found length 144 at 649
+Found length 170 at 703
+Found length 178 at 871
+Found length 181 at 1161
+Found length 182 at 2223
+Found length 208 at 2463
+Found length 216 at 2919
+Found length 237 at 3711
+Found length 261 at 6171
+Found length 267 at 10971
+Found length 275 at 13255
+Found length 278 at 17647
+Found length 281 at 23529
+Found length 307 at 26623 lines of output
+-bash: 4: command not found
+testing 4 gives  lines of output
+-bash: 5: command not found
+testing 5 gives Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3
+Found length 8 at 6
+Found length 16 at 7
+Found length 19 at 9
+Found length 20 at 18
+Found length 23 at 25
+Found length 111 at 27
+Found length 112 at 54
+Found length 115 at 73
+Found length 118 at 97
+Found length 121 at 129
+Found length 124 at 171
+Found length 127 at 231
+Found length 130 at 313
+Found length 143 at 327
+Found length 144 at 649
+Found length 170 at 703
+Found length 178 at 871
+Found length 181 at 1161
+Found length 182 at 2223
+Found length 208 at 2463
+Found length 216 at 2919
+Found length 237 at 3711
+Found length 261 at 6171
+Found length 267 at 10971
+Found length 275 at 13255
+Found length 278 at 17647
+Found length 281 at 23529
+Found length 307 at 26623 lines of output
+[eijkhout@isp02 sessions]$ for input in 3 4 5 ; do echo "testing $input gives $( echo $input | ./collatz ) lines of output" ; done
+testing 3 gives Found length 0 at 1
+Found length 1 at 2 lines of output
+testing 4 gives Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3 lines of output
+testing 5 gives Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3 lines of output
+[eijkhout@isp02 sessions]$ for input in 3 4 5 ; do nlines=$( echo $input | ./collatz ) ; echo "input $input gives $nlines lines of output" ; done
+input 3 gives Found length 0 at 1
+Found length 1 at 2 lines of output
+input 4 gives Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3 lines of output
+input 5 gives Found length 0 at 1
+Found length 1 at 2
+Found length 7 at 3 lines of output
+[eijkhout@isp02 sessions]$ for input in 3 4 5 ; do nlines=$( echo $input | ./collatz | wc -l ) ; echo "input $input gives $nlines lines of output" ; done
+input 3 gives 2 lines of output
+input 4 gives 3 lines of output
+input 5 gives 3 lines of output
+[eijkhout@isp02 sessions]$ for input in 12 3 4 5 ; do nlines=$( echo $input | ./collatz | wc -l ) ; echo "input $input gives $nlines lines of output" ; done
+input 12 gives 6 lines of output
+input 3 gives 2 lines of output
+input 4 gives 3 lines of output
+input 5 gives 3 lines of output
+[eijkhout@isp02 sessions]$ cat > collatz_script.sh
+#!/bin/bash
+for input in 12 3 4 5 ; do nlines=$( echo $input | ./collatz | wc -l ) ; echo "input $input gives $nlines lines of output" ; done
+[eijkhout@isp02 sessions]$ cat !$
+cat collatz_script.sh
+#!/bin/bash
+for input in 12 3 4 5 ; do nlines=$( echo $input | ./collatz | wc -l ) ; echo "input $input gives $nlines lines of output" ; done
+[eijkhout@isp02 sessions]$ collatz_script.sh
+-bash: collatz_script.sh: command not found
+[eijkhout@isp02 sessions]$ # two things necessary:
+[eijkhout@isp02 sessions]$ # 1. make executable
+[eijkhout@isp02 sessions]$ chmod +x collatz_script.sh
+[eijkhout@isp02 sessions]$ collatz_script.sh
+-bash: collatz_script.sh: command not found
+[eijkhout@isp02 sessions]$ # 2. I need to tell it where that script is
+[eijkhout@isp02 sessions]$ # background: unix "commands" are often little programs
+[eijkhout@isp02 sessions]$ # the shell finds them along $PATH
+[eijkhout@isp02 sessions]$ echo $PATH
+/usr/bin/tester/coe322fall2021:/opt/rh/devtoolset-8/root/usr/bin:/usr/local/bin/gcc-9.1/bin:/opt/intel/intelpython3/bin:/opt/intel/intelpython3/condabin:/opt/intel/advisor_2020.1.0.605410/bin64:/opt/intel/vtune_profiler_2020.1.0.607630/bin64:/opt/intel/inspector_2020.1.0.604266/bin64:/opt/intel/itac/2020.1.024/intel64/bin:/opt/intel/itac/2020.1.024/intel64/bin:/opt/intel/clck/2019.8/bin/intel64:/opt/intel/compilers_and_libraries_2020.1.217/linux/bin/intel64:/opt/intel/compilers_and_libraries_2020.1.217/linux/bin:/opt/intel/compilers_and_libraries_2020.1.217/linux/mpi/intel64/libfabric/bin:/opt/intel/compilers_and_libraries_2020.1.217/linux/mpi/intel64/bin:/opt/intel/debugger_2020/gdb/intel64/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/intel/parallel_studio_xe_2020.1.102/bin:/home/eijkhout/.local/bin:/home/eijkhout/bin
+[eijkhout@isp02 sessions]$ # if I type ls, it executes:
+[eijkhout@isp02 sessions]$ which ls
+alias ls='ls --color=auto'
+      /usr/bin/ls
+[eijkhout@isp02 sessions]$ # /usr/bin/ls
+[eijkhout@isp02 sessions]$
+[eijkhout@isp02 sessions]$ # ok, so I need to add that script to the path.
+[eijkhout@isp02 sessions]$ # easy way out:
+[eijkhout@isp02 sessions]$ ./collatz_script.sh
+input 12 gives 6 lines of output
+input 3 gives 2 lines of output
+input 4 gives 3 lines of output
+input 5 gives 3 lines of output
+[eijkhout@isp02 sessions]$ pwd
+/home/eijkhout/coe322fall2021/sessions
+[eijkhout@isp02 sessions]$ # I want to be able to say: ./collatz_script.sh 234
+[eijkhout@isp02 sessions]$ # updated script:
+[eijkhout@isp02 sessions]$ cat collatz_script.sh
+#!/bin/bash
+
+for input in 12 3 4 5 $1 ; do
+    nlines=$( echo $input | ./collatz | wc -l )
+    echo "input $input gives $nlines lines of output"
+done
+[eijkhout@isp02 sessions]$ # that $1 is the first commandline argument
+[eijkhout@isp02 sessions]$ ./collatz_script.sh 234
+input 12 gives 6 lines of output
+input 3 gives 2 lines of output
+input 4 gives 3 lines of output
+input 5 gives 3 lines of output
+input 234 gives 15 lines of output
+[eijkhout@isp02 sessions]$
